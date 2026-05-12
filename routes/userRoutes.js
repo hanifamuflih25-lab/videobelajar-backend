@@ -11,9 +11,7 @@ import {
 
 const router = express.Router();
 
-// ======================
-// GET ALL USERS
-// ======================
+
 router.get("/", async (req, res) => {
   try {
     const data = await getAllUsers();
@@ -26,9 +24,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// ======================
-// GET USER BY ID
-// ======================
+
 router.get("/:id", async (req, res) => {
   try {
     const data = await getUserById(req.params.id);
@@ -41,9 +37,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// ======================
-// CREATE USER
-// ======================
+
 router.post("/", async (req, res) => {
   try {
     await createUser(req.body);
@@ -58,9 +52,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// ======================
-// REGISTER
-// ======================
+
 router.post("/register", async (req, res) => {
   try {
     await createUser(req.body);
@@ -75,9 +67,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// ======================
-// LOGIN
-// ======================
+
 router.post("/login", async (req, res) => {
   try {
     const data = await loginUser(
@@ -102,9 +92,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// ======================
-// UPDATE USER
-// ======================
+
 router.patch("/:id", async (req, res) => {
   try {
     await updateUser(req.params.id, req.body);
@@ -119,9 +107,7 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
-// ======================
-// DELETE USER
-// ======================
+
 router.delete("/:id", async (req, res) => {
   try {
     await deleteUser(req.params.id);
