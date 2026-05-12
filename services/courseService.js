@@ -1,8 +1,6 @@
 import { db } from "../config/db.js";
 
-// ======================
-// GET ALL
-// ======================
+
 export const getAllCourses = () => {
   return new Promise((resolve, reject) => {
     db.query("SELECT * FROM courses", (err, results) => {
@@ -12,9 +10,7 @@ export const getAllCourses = () => {
   });
 };
 
-// ======================
-// GET BY ID
-// ======================
+
 export const getCourseById = (id) => {
   return new Promise((resolve, reject) => {
     db.query(
@@ -28,9 +24,7 @@ export const getCourseById = (id) => {
   });
 };
 
-// ======================
-// CREATE
-// ======================
+
 export const createCourse = (data) => {
   return new Promise((resolve, reject) => {
     db.query("INSERT INTO courses SET ?", data, (err, result) => {
@@ -40,9 +34,7 @@ export const createCourse = (data) => {
   });
 };
 
-// ======================
-// UPDATE
-// ======================
+
 export const updateCourse = (id, data) => {
   return new Promise((resolve, reject) => {
     db.query(
@@ -56,9 +48,7 @@ export const updateCourse = (id, data) => {
   });
 };
 
-// ======================
-// DELETE
-// ======================
+
 export const deleteCourse = (id) => {
   return new Promise((resolve, reject) => {
     db.query(

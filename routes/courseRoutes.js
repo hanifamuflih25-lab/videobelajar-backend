@@ -9,9 +9,7 @@ import {
 
 const router = express.Router();
 
-// ======================
-// GET ALL
-// ======================
+
 router.get("/", async (req, res) => {
   try {
     const data = await getAllCourses();
@@ -25,9 +23,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// ======================
-// GET BY ID
-// ======================
 router.get("/:id", async (req, res) => {
   try {
     const data = await getCourseById(req.params.id);
@@ -47,9 +42,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// ======================
-// CREATE
-// ======================
+
 router.post("/", async (req, res) => {
   try {
     const result = await createCourse(req.body);
@@ -63,9 +56,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// ======================
-// UPDATE
-// ======================
+
 router.patch("/:id", async (req, res) => {
   try {
     const result = await updateCourse(req.params.id, req.body);
@@ -84,9 +75,7 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
-// ======================
-// DELETE
-// ======================
+
 router.delete("/:id", async (req, res) => {
   try {
     const result = await deleteCourse(req.params.id);

@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/courses", courseRoutes);
-app.use("/users", userRoutes); // ✅ PINDAH KE SINI
+app.use("/users", userRoutes); 
 
 const PORT = process.env.PORT || 3000;
 

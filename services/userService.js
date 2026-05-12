@@ -1,6 +1,6 @@
 import { db } from "../config/db.js";
 
-// REGISTER
+
 export const createUser = (data) => {
   return new Promise((resolve, reject) => {
     const sql =
@@ -17,7 +17,7 @@ export const createUser = (data) => {
   });
 };
 
-// LOGIN
+
 export const loginUser = (email, password) => {
   return new Promise((resolve, reject) => {
     const sql =

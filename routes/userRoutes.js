@@ -3,7 +3,7 @@ import { createUser, loginUser } from "../services/userService.js";
 
 const router = express.Router();
 
-// REGISTER
+
 router.post("/register", async (req, res) => {
   try {
     await createUser(req.body);
@@ -18,7 +18,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// LOGIN
+
 router.post("/login", async (req, res) => {
   try {
     const data = await loginUser(
