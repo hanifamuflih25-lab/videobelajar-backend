@@ -1,9 +1,66 @@
 import express from "express";
-import { createUser, loginUser } from "../services/userService.js";
+
+import {
+  getAllUsers,
+  getUserById,
+  createUser,
+  updateUser,
+  deleteUser,
+  loginUser,
+} from "../services/userService.js";
 
 const router = express.Router();
 
+// ======================
+// GET ALL USERS
+// ======================
+router.get("/", async (req, res) => {
+  try {
+    const data = await getAllUsers();
 
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json({
+      error: err.message,
+    });
+  }
+});
+
+// ======================
+// GET USER BY ID
+// ======================
+router.get("/:id", async (req, res) => {
+  try {
+    const data = await getUserById(req.params.id);
+
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json({
+      error: err.message,
+    });
+  }
+});
+
+// ======================
+// CREATE USER
+// ======================
+router.post("/", async (req, res) => {
+  try {
+    await createUser(req.body);
+
+    res.status(201).json({
+      message: "User created",
+    });
+  } catch (err) {
+    res.status(500).json({
+      error: err.message,
+    });
+  }
+});
+
+// ======================
+// REGISTER
+// ======================
 router.post("/register", async (req, res) => {
   try {
     await createUser(req.body);
@@ -18,7 +75,9 @@ router.post("/register", async (req, res) => {
   }
 });
 
-
+// ======================
+// LOGIN
+// ======================
 router.post("/login", async (req, res) => {
   try {
     const data = await loginUser(
@@ -35,6 +94,40 @@ router.post("/login", async (req, res) => {
     res.status(200).json({
       message: "Login berhasil",
       user: data[0],
+    });
+  } catch (err) {
+    res.status(500).json({
+      error: err.message,
+    });
+  }
+});
+
+// ======================
+// UPDATE USER
+// ======================
+router.patch("/:id", async (req, res) => {
+  try {
+    await updateUser(req.params.id, req.body);
+
+    res.status(200).json({
+      message: "User updated",
+    });
+  } catch (err) {
+    res.status(500).json({
+      error: err.message,
+    });
+  }
+});
+
+// ======================
+// DELETE USER
+// ======================
+router.delete("/:id", async (req, res) => {
+  try {
+    await deleteUser(req.params.id);
+
+    res.status(200).json({
+      message: "User deleted",
     });
   } catch (err) {
     res.status(500).json({
