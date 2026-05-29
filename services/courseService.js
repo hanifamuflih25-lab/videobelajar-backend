@@ -1,16 +1,52 @@
 import { db } from "../config/db.js";
 
-
-export const getAllCourses = () => {
+// ======================
+// GET ALL COURSES
+// SEARCH / FILTER / SORT
+// ======================
+export const getAllCourses = (query) => {
   return new Promise((resolve, reject) => {
-    db.query("SELECT * FROM courses", (err, results) => {
+
+    // SQL DASAR
+    let sql = "SELECT * FROM courses";
+
+    // ======================
+    // SEARCH
+    // ======================
+    if (query.search) {
+      sql += ` WHERE title LIKE '%${query.search}%'`;
+    }
+
+    // ======================
+    // FILTER
+    // ======================
+    if (query.teacher) {
+
+      // CEK apakah sudah ada WHERE
+      if (sql.includes("WHERE")) {
+        sql += ` AND teacher = '${query.teacher}'`;
+      } else {
+        sql += ` WHERE teacher = '${query.teacher}'`;
+      }
+    }
+
+    // ======================
+    // SORT
+    // ======================
+    if (query.sort) {
+      sql += ` ORDER BY ${query.sort} ASC`;
+    }
+
+    db.query(sql, (err, results) => {
       if (err) reject(err);
       else resolve(results);
     });
   });
 };
 
-
+// ======================
+// GET COURSE BY ID
+// ======================
 export const getCourseById = (id) => {
   return new Promise((resolve, reject) => {
     db.query(
@@ -24,17 +60,25 @@ export const getCourseById = (id) => {
   });
 };
 
-
+// ======================
+// CREATE COURSE
+// ======================
 export const createCourse = (data) => {
   return new Promise((resolve, reject) => {
-    db.query("INSERT INTO courses SET ?", data, (err, result) => {
-      if (err) reject(err);
-      else resolve(result);
-    });
+    db.query(
+      "INSERT INTO courses SET ?",
+      data,
+      (err, result) => {
+        if (err) reject(err);
+        else resolve(result);
+      }
+    );
   });
 };
 
-
+// ======================
+// UPDATE COURSE
+// ======================
 export const updateCourse = (id, data) => {
   return new Promise((resolve, reject) => {
     db.query(
@@ -48,7 +92,9 @@ export const updateCourse = (id, data) => {
   });
 };
 
-
+// ======================
+// DELETE COURSE
+// ======================
 export const deleteCourse = (id) => {
   return new Promise((resolve, reject) => {
     db.query(

@@ -7,23 +7,40 @@ import {
   deleteCourse,
 } from "../services/courseService.js";
 
+// IMPORT MIDDLEWARE
+import { verifyToken } from "../middlewares/authMiddleware.js";
+
 const router = express.Router();
 
-
-router.get("/", async (req, res) => {
+// ======================
+// GET ALL COURSES
+// SEARCH / FILTER / SORT
+// PROTECTED ROUTE
+// ======================
+router.get("/", verifyToken, async (req, res) => {
   try {
-    const data = await getAllCourses();
+    // AMBIL QUERY PARAMS
+    const query = req.query;
+
+    // KIRIM QUERY KE SERVICE
+    const data = await getAllCourses(query);
 
     res.status(200).json({
       message: "Success get all courses",
       data,
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({
+      error: err.message,
+    });
   }
 });
 
-router.get("/:id", async (req, res) => {
+// ======================
+// GET COURSE BY ID
+// PROTECTED ROUTE
+// ======================
+router.get("/:id", verifyToken, async (req, res) => {
   try {
     const data = await getCourseById(req.params.id);
 
@@ -38,12 +55,17 @@ router.get("/:id", async (req, res) => {
       data: data[0],
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({
+      error: err.message,
+    });
   }
 });
 
-
-router.post("/", async (req, res) => {
+// ======================
+// CREATE COURSE
+// PROTECTED ROUTE
+// ======================
+router.post("/", verifyToken, async (req, res) => {
   try {
     const result = await createCourse(req.body);
 
@@ -52,14 +74,22 @@ router.post("/", async (req, res) => {
       id: result.insertId,
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({
+      error: err.message,
+    });
   }
 });
 
-
-router.patch("/:id", async (req, res) => {
+// ======================
+// UPDATE COURSE
+// PROTECTED ROUTE
+// ======================
+router.patch("/:id", verifyToken, async (req, res) => {
   try {
-    const result = await updateCourse(req.params.id, req.body);
+    const result = await updateCourse(
+      req.params.id,
+      req.body
+    );
 
     if (result.affectedRows === 0) {
       return res.status(404).json({
@@ -71,12 +101,17 @@ router.patch("/:id", async (req, res) => {
       message: "Course updated",
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({
+      error: err.message,
+    });
   }
 });
 
-
-router.delete("/:id", async (req, res) => {
+// ======================
+// DELETE COURSE
+// PROTECTED ROUTE
+// ======================
+router.delete("/:id", verifyToken, async (req, res) => {
   try {
     const result = await deleteCourse(req.params.id);
 
@@ -90,7 +125,9 @@ router.delete("/:id", async (req, res) => {
       message: "Course deleted",
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({
+      error: err.message,
+    });
   }
 });
 
